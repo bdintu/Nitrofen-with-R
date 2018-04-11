@@ -66,7 +66,7 @@ Scatter Plot
 
     plot(nitrofen)
 
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-2-1.svg)
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
 Summary data
 ------------
@@ -104,4 +104,4 @@ Plot conc ~ total
     plot(conc ~ total, col=conc)
     lines(loess.smooth(total, conc))
 
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-1.svg)
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-1.png)

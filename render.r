@@ -1,2 +1,2 @@
 library(rmarkdown)
-render("nitrofen.rmd", c("md_document", "html_document"))
+render("nitrofen.rmd", "md_document")

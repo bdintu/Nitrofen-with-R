@@ -16,7 +16,7 @@ attach(nitrofen)
 ```
 
 ## Scatter Plot
-```{r dev='svg'}
+```{r}
 plot(nitrofen)
 ```
 
@@ -39,7 +39,7 @@ sapply(nitrofen, nitrofen.summary)
 ```
 
 ## Plot conc ~ total
-``` {r dev='svg'}
+``` {r}
 plot(conc ~ total, col=conc)
 lines(loess.smooth(total, conc))
 ```
