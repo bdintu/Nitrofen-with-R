@@ -1,5 +1,5 @@
 ---
-output: html_document
+output: md_document
 ---
 
 ## Read CSV
@@ -36,4 +36,10 @@ nitrofen.summary <- function(x) {   c(Min = min(x),
                                     Len = length(x) )
 }
 sapply(nitrofen, nitrofen.summary)
+```
+
+## Plot conc ~ total
+``` {r dev='svg'}
+plot(conc ~ total, col=conc)
+lines(loess.smooth(total, conc))
 ```
