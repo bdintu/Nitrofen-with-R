@@ -1,0 +1,39 @@
+---
+output: html_document
+---
+
+## Read CSV
+
+```{r}
+nitrofen <- read.csv("nitrofen.csv", row.names=1)
+print(nitrofen)
+```
+
+## Attach
+
+```
+attach(nitrofen)
+```
+
+## Scatter Plot
+```{r dev='svg'}
+plot(nitrofen)
+```
+
+## Summary data
+
+```{r}
+nitrofen.summary <- function(x) {   c(Min = min(x),
+                                    SD = sd(x),
+                                    Q1 = quantile(x, 0.25),
+                                    IQR = IQR(x),
+                                    Mean = mean(x),
+                                    Med = median(x),
+                                    Q3 = quantile(x, 0.75),
+                                    Max = max(x),
+                                    Range = (range(x)[2] - range(x)[1]),
+                                    Var = var(x),
+                                    Len = length(x) )
+}
+sapply(nitrofen, nitrofen.summary)
+```
