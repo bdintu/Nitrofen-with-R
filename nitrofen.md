@@ -1,9 +1,17 @@
 Toxicity of Nitrofen in Aquatic Systems
 =======================================
 
-        Nitrofen is a herbicide that was used extensively for the control of broad-leaved and grass weeds in cereals and rice. Although it is relatively non-toxic to adult mammals, nitrofen is a significant tetragen and mutagen. It is also acutely toxic and reproductively toxic to cladoceran zooplankton. Nitrofen is no longer in commercial use in the U.S., having been the first pesticide to be withdrawn due to tetragenic effects.
+Decription
+----------
 
-        The data here come from an experiment to measure the reproductive toxicity of nitrofen on a species of zooplankton. 50 animals were randomized into batches of 10 and each batch was put in a solution with a measured concentration of nitrofen. Then the number of live offspring in each of the three broods to each animal was recorded.
+        Nitrofen is a herbicide that was used extensively for the control of broad-leaved and grass weeds in cereals and rice. 
+        Although it is relatively non-toxic to adult mammals, nitrofen is a significant tetragen and mutagen. 
+        It is also acutely toxic and reproductively toxic to cladoceran zooplankton. 
+        Nitrofen is no longer in commercial use in the U.S., having been the first pesticide to be withdrawn due to tetragenic effects.
+
+        The data here come from an experiment to measure the reproductive toxicity of nitrofen on a species of zooplankton. 
+        50 animals were randomized into batches of 10 and each batch was put in a solution with a measured concentration of nitrofen. 
+        Then the number of live offspring in each of the three broods to each animal was recorded.
 
 Format
 ------
@@ -26,12 +34,12 @@ Format
 
 ### total
 
--   The total number of live offspring in the first three broods. \`\`\`
+-   The total number of live offspring in the first three broods.
 
 Read CSV
 --------
 
-    nitrofen <- read.csv("nitrofen.csv", row.names=1)
+    nitrofen <- read.csv('nitrofen.csv', row.names=1)
 
 RAW Data
 --------
@@ -95,53 +103,6 @@ Attach
 
     attach(nitrofen)
 
-Scatter Plot All
-----------------
-
-    barplot(conc,names.arg = c(1:50))
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-1.png)
-
-    plot(brood1, type='o')
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-2.png)
-
-    plot(brood2, type='o')
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-3.png)
-
-    plot(brood3, type='o')
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-4.png)
-
-    plot(total, type='o')
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-5.png)
-
-Scatter Plot dependent variable
--------------------------------
-
-    plot(total, type='o', col='red')
-    lines(brood1, type = "o", col='blue')
-    lines(brood2, type = "o", col='yellow')
-    lines(brood3, type = "o", col='green')
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-5-1.png)
-
-Box Plot
---------
-
-    boxplot(nitrofen[2:5])
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-6-1.png)
-
-Hist
-----
-
-    hist(total)
-
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-7-1.png)
-
 Summary Data
 ------------
 
@@ -172,11 +133,65 @@ Summary Data
     ## Var    12261.2245  2.196327 28.839184 33.709796 115.00571
     ## Len       50.0000 50.000000 50.000000 50.000000  50.00000
 
-Plot conc ~ total
------------------
+Scatter Plot All
+----------------
 
-    rela <- lm(total ~ conc)
-    summary(rela)
+### conc
+
+    barplot(conc,names.arg = c(1:50), xlab='Index', ylab='(mug/litre)', main='The nitrofen concentration in the solution')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+
+### brood1
+
+    plot(brood1, type='o', col='blue', xlab='Index', ylab='life', main='The number of live offspring in the first brood')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+
+### brood2
+
+    plot(brood2, type='o', col='yellow', xlab='Index', ylab='life', main='The number of live offspring in the second brood')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+
+### brood3
+
+    plot(brood3, type='o', col='green', xlab='Index', ylab='life', main='The number of live offspring in the third brood')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+
+### total
+
+    plot(total, type='o', col='red', xlab='Index', ylab='life', main='The total number of live offspring in the first three broods')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+
+Dependent Variable Plot
+-----------------------
+
+### Scatter Plot
+
+    plot(total, type='o', col='red', lty=1, xlab='Index', ylab='life', pch='o', main='The number of live offspring')
+    lines(brood1, type = 'o', col='blue', lty=2, pch='x')
+    lines(brood2, type = 'o', col='yellow', lty=3, pch='+')
+    lines(brood3, type = 'o', col='green', lty=4, pch='*')
+    legend(x='topright', legend=c('total', 'brood1', 'brood2', 'brood3'), col=c('red', 'blue', 'yellow','green'), pch=c('o','x','+','*'),lty=c(1,2,3,4))
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+
+### Box Plot
+
+    boxplot(nitrofen[2:4], col = c('blue','yellow','green'), names = c('brood1','brood2','brood3'),xlab='Index', ylab='life', main='The number of live offspring')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+
+Use total ~ conc
+----------------
+
+### Linear Regression
+
+    relation <- lm(total ~ conc)
+    summary(relation)
 
     ## 
     ## Call:
@@ -197,7 +212,18 @@ Plot conc ~ total
     ## Multiple R-squared:  0.7416, Adjusted R-squared:  0.7362 
     ## F-statistic: 137.8 on 1 and 48 DF,  p-value: 1.038e-15
 
-    plot(total ~ conc, col=conc)
-    abline(rela)
+### Plot total ~ conc
 
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+    plot(total ~ conc, col='blue', lty=1, xlab='conc', ylab='life', main='Linear Regression')
+    abline(relation, col='red', lty=2)
+    legend(x='bottomleft', legend=c('total ~ conc', 'predict'), col=c('blue','red'), pch=c('o','-'),lty=c(1,2))
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-13-1.png)
+
+### Predicted Missing Range
+
+    plot(total, col='red', lty=1, xlab='Index', ylab='life', main='Predicted Missing Range')
+    abline(lm(total ~ c(1:50)), col='blue', lty=2)
+    legend(x='bottomleft', legend=c('total','predict'), col=c('red','blue'), pch=c('o','-'),lty=c(1,2))
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-14-1.png)
