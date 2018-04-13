@@ -2,26 +2,75 @@
 output: md_document
 ---
 
-## Read CSV
+# Toxicity of Nitrofen in Aquatic Systems
 
+```
+    Nitrofen is a herbicide that was used extensively for the control of broad-leaved and grass weeds in cereals and rice. Although it is relatively non-toxic to adult mammals, nitrofen is a significant tetragen and mutagen. It is also acutely toxic and reproductively toxic to cladoceran zooplankton. Nitrofen is no longer in commercial use in the U.S., having been the first pesticide to be withdrawn due to tetragenic effects.
+
+    The data here come from an experiment to measure the reproductive toxicity of nitrofen on a species of zooplankton. 50 animals were randomized into batches of 10 and each batch was put in a solution with a measured concentration of nitrofen. Then the number of live offspring in each of the three broods to each animal was recorded.
+```
+
+## Format
+
+### conc
+- The nitrofen concentration in the solution (mug/litre).
+
+### brood1
+- The number of live offspring in the first brood.
+
+### brood2
+- The number of live offspring in the second brood.
+
+### brood3
+- The number of live offspring in the third brood.
+
+### total
+- The total number of live offspring in the first three broods.
+```
+
+## Read CSV
 ```{r}
 nitrofen <- read.csv("nitrofen.csv", row.names=1)
+```
+
+## RAW Data
+```{r}
 print(nitrofen)
 ```
 
 ## Attach
-
-```
+```{r message = FALSE}
 attach(nitrofen)
 ```
 
-## Scatter Plot
+## Scatter Plot All
 ```{r}
-plot(nitrofen)
+barplot(conc,names.arg = c(1:50))
+plot(brood1, type='o')
+plot(brood2, type='o')
+plot(brood3, type='o')
+plot(total, type='o')
 ```
 
-## Summary data
+## Scatter Plot dependent variable
+```{r}
+plot(total, type='o', col='red')
+lines(brood1, type = "o", col='blue')
+lines(brood2, type = "o", col='yellow')
+lines(brood3, type = "o", col='green')
+```
 
+## Box Plot
+```{r}
+boxplot(nitrofen[2:5])
+```
+
+## Hist
+```{r}
+hist(total)
+```
+
+## Summary Data
 ```{r}
 nitrofen.summary <- function(x) {   c(Min = min(x),
                                     SD = sd(x),
@@ -39,7 +88,9 @@ sapply(nitrofen, nitrofen.summary)
 ```
 
 ## Plot conc ~ total
-``` {r}
-plot(conc ~ total, col=conc)
-lines(loess.smooth(total, conc))
+```{r}
+rela <- lm(total ~ conc)
+summary(rela)
+plot(total ~ conc, col=conc)
+abline(rela)
 ```

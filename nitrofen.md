@@ -1,7 +1,41 @@
+Toxicity of Nitrofen in Aquatic Systems
+=======================================
+
+        Nitrofen is a herbicide that was used extensively for the control of broad-leaved and grass weeds in cereals and rice. Although it is relatively non-toxic to adult mammals, nitrofen is a significant tetragen and mutagen. It is also acutely toxic and reproductively toxic to cladoceran zooplankton. Nitrofen is no longer in commercial use in the U.S., having been the first pesticide to be withdrawn due to tetragenic effects.
+
+        The data here come from an experiment to measure the reproductive toxicity of nitrofen on a species of zooplankton. 50 animals were randomized into batches of 10 and each batch was put in a solution with a measured concentration of nitrofen. Then the number of live offspring in each of the three broods to each animal was recorded.
+
+Format
+------
+
+### conc
+
+-   The nitrofen concentration in the solution (mug/litre).
+
+### brood1
+
+-   The number of live offspring in the first brood.
+
+### brood2
+
+-   The number of live offspring in the second brood.
+
+### brood3
+
+-   The number of live offspring in the third brood.
+
+### total
+
+-   The total number of live offspring in the first three broods. \`\`\`
+
 Read CSV
 --------
 
     nitrofen <- read.csv("nitrofen.csv", row.names=1)
+
+RAW Data
+--------
+
     print(nitrofen)
 
     ##    conc brood1 brood2 brood3 total
@@ -61,14 +95,54 @@ Attach
 
     attach(nitrofen)
 
-Scatter Plot
-------------
+Scatter Plot All
+----------------
 
-    plot(nitrofen)
+    barplot(conc,names.arg = c(1:50))
 
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-2-1.png)
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-1.png)
 
-Summary data
+    plot(brood1, type='o')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-2.png)
+
+    plot(brood2, type='o')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-3.png)
+
+    plot(brood3, type='o')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-4.png)
+
+    plot(total, type='o')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-5.png)
+
+Scatter Plot dependent variable
+-------------------------------
+
+    plot(total, type='o', col='red')
+    lines(brood1, type = "o", col='blue')
+    lines(brood2, type = "o", col='yellow')
+    lines(brood3, type = "o", col='green')
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+
+Box Plot
+--------
+
+    boxplot(nitrofen[2:5])
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+
+Hist
+----
+
+    hist(total)
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+
+Summary Data
 ------------
 
     nitrofen.summary <- function(x) {   c(Min = min(x),
@@ -101,7 +175,29 @@ Summary data
 Plot conc ~ total
 -----------------
 
-    plot(conc ~ total, col=conc)
-    lines(loess.smooth(total, conc))
+    rela <- lm(total ~ conc)
+    summary(rela)
 
-![](nitrofen_files/figure-markdown_strict/unnamed-chunk-4-1.png)
+    ## 
+    ## Call:
+    ## lm(formula = total ~ conc)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -11.9741  -4.1195  -0.3383   4.6254  10.6254 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept) 35.974134   1.360648   26.44  < 2e-16 ***
+    ## conc        -0.083402   0.007106  -11.74 1.04e-15 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 5.508 on 48 degrees of freedom
+    ## Multiple R-squared:  0.7416, Adjusted R-squared:  0.7362 
+    ## F-statistic: 137.8 on 1 and 48 DF,  p-value: 1.038e-15
+
+    plot(total ~ conc, col=conc)
+    abline(rela)
+
+![](nitrofen_files/figure-markdown_strict/unnamed-chunk-9-1.png)
